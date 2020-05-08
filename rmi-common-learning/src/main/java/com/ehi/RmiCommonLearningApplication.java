@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FeignLearningApplication {
+public class RmiCommonLearningApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FeignLearningApplication.class, args);
+        SpringApplication.run(RmiCommonLearningApplication.class, args);
     }
 
 }
