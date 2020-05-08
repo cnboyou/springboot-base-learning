@@ -1,0 +1,8 @@
+
+spring:
+  redis:
+    password: wyh19950212
+    port: 6379
+    host: 39.108.251.115
+  cache:
+    cache-names: c1
