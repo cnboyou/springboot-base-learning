@@ -1,0 +1,6 @@
+spring:
+  security:
+  #配置用户
+    user:
+      name: wyh
+      password: 123
