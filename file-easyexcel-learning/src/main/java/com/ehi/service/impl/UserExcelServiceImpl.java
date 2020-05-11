@@ -7,6 +7,8 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import com.ehi.config.listener.ExcelListener;
 import com.ehi.model.UserExcelVO;
 import com.ehi.service.UserExcelService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -22,7 +24,7 @@ import java.util.List;
  */
 @Service
 public class UserExcelServiceImpl implements UserExcelService {
-
+    private static final Logger logger = LoggerFactory.getLogger(UserExcelServiceImpl.class);
     /**
      * 生成excel模板，无表头
      *
@@ -113,6 +115,11 @@ public class UserExcelServiceImpl implements UserExcelService {
             ExcelListener listener = new ExcelListener();
             ExcelReader reader = new ExcelReader(inputStream, null, listener);
             reader.read(new Sheet(1,1,UserExcelVO.class));
+            List datas = listener.getDatas();
+            for (Object data : datas) {
+                UserExcelVO userExcelVO = (UserExcelVO) data;
+                logger.info("姓名：{}",userExcelVO.getUsername());
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
