@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 读取配置文件, 多个properties文件可以用英文逗号分隔 -->
+    <context:property-placeholder ignore-resource-not-found="true" location="classpath*:/rabbitmq.properties" file-encoding="UTF-8"/>
+    <!-- 公共部分 -->
+    <!-- 创建连接类 连接安装好的 rabbitmq -->
+    <bean id="connectionFactory"  class="org.springframework.amqp.rabbit.connection.CachingConnectionFactory">
+        <constructor-arg value="localhost" />
+        <!-- username,访问RabbitMQ服务器的账户,默认是guest -->
+        <property name="username" value="${rmq.manager.user}" />
+        <!-- username,访问RabbitMQ服务器的密码,默认是guest -->
+        <property name="password" value="${rmq.manager.password}" />
+        <!-- host,RabbitMQ服务器地址，默认值"localhost" -->
+        <property name="host" value="${rmq.ip}" />
+        <!-- port，RabbitMQ服务端口，默认值为5672 -->
+        <property name="port" value="${rmq.port}" />
+    </bean>
+    <bean id="amqpAdmin" class="org.springframework.amqp.rabbit.core.RabbitAdmin">
+        <constructor-arg ref="connectionFactory" />
+    </bean>
+
+    <bean id="rabbitTemplate" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+        <constructor-arg ref="connectionFactory"></constructor-arg>
+    </bean>
+
+
+    <!-- 声明消息转换器为SimpleMessageConverter -->
+    <bean id="messageConverter"
+          class="org.springframework.amqp.support.converter.SerializerMessageConverter">
+    </bean>
+</beans>

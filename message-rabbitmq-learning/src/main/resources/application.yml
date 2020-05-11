@@ -5,7 +5,8 @@ spring:
   application:
     name: rabbitmq-demo
   rabbitmq:
+    #默认地址就是127.0.0.1：5672，如果是服务器的rabbitmq就改下
     host: 127.0.0.1
     port: 5672
-    username: admin
-    password: admin
+    username: guest
+    password: guest

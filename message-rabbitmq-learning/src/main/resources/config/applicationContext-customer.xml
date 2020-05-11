@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+    <!-- name:队列名称;autoDelete：是否自动删除，当最后一个消费者断开连接之后队列是否自动被删除；durable： 是否持久化, 队列的声明默认是存放到内存中的，如果rabbitmq重启会丢失，如果想重启之后还存在就要使队列持久化，保存到Erlang自带的Mnesia数据库中，当rabbitmq重启之后会读取该数据库 -->
+    <!-- 声明Queue并设定Queue的名称 -->
+    <rabbit:queue name="user" durable="true" auto-delete="false"/>
+    <rabbit:queue name="hello" durable="true" auto-delete="false"/>
+    <!-- direct 模式可不配置direct-exchange -->
+    <!--	<rabbit:direct-exchange name="direct" xmlns="http://www.springframework.org/schema/rabbit" durable="true">-->
+    <!--		<bindings>-->
+    <!--			<binding queue="user" key="user" />-->
+    <!--			<binding queue="hello" key="hello" />-->
+    <!--		</bindings>-->
+    <!--	</rabbit:direct-exchange>-->
+
+    <rabbit:queue name="topic.message" durable="true" auto-delete="false"/>
+    <rabbit:queue name="topic.messages" durable="true" auto-delete="false"/>
+
+    <!-- topic主题 -->
+    <rabbit:topic-exchange name="exchange" xmlns="http://www.springframework.org/schema/rabbit" durable="true">
+        <!-- 交换器绑定queue ,pattern就是routeKey路由键 -->
+        <bindings>
+            <binding queue="topic.message" pattern="topic.message" />
+            <binding queue="topic.messages" pattern="topic.#" />
+        </bindings>
+    </rabbit:topic-exchange>
+
+    <rabbit:queue name="fanout.A" durable="true" auto-delete="false"/>
+    <rabbit:queue name="fanout.B" durable="true" auto-delete="false"/>
+    <rabbit:queue name="fanout.C" durable="true" auto-delete="false"/>
+
+    <!--fanout主题  没有routeKey路由键-->
+    <rabbit:fanout-exchange id="spittle.fanout" name="spittle.fanout" durable="true">
+
+        <rabbit:bindings>
+            <rabbit:binding queue="fanout.A" />
+            <rabbit:binding queue="fanout.B" />
+            <rabbit:binding queue="fanout.C" />
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
+
+
+
+    <bean id="receiver" class="com.ehi.xml.Receiver" />
+
+    <!-- 把监听器配置进rabbit监听容器，ref引用bean，method监听方法，queues监听队列名字(上面配置的queue的name)  -->
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="receiver" method="processUser" queues="user" />
+        <rabbit:listener ref="receiver" method="processHello" queues="hello" />
+
+        <rabbit:listener ref="receiver" method="processTopicMessage" queues="topic.message" />
+        <rabbit:listener ref="receiver" method="processTopicMessages" queues="topic.messages" />
+        <rabbit:listener ref="receiver" method="processFanoutA" queues="fanout.A" />
+        <rabbit:listener ref="receiver" method="processFanoutB" queues="fanout.B" />
+        <rabbit:listener ref="receiver" method="processFanoutC" queues="fanout.C" />
+    </rabbit:listener-container>
+</beans>
