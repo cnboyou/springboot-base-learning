@@ -22,5 +22,5 @@ public interface UploadService {
      * 断点上传
      * @param file
      */
-    void breakUpload(MultipartFile file, Long position, Long fileLenght);
+    void breakUpload(MultipartFile file, Long position, Long fileLenght) throws IOException;
 }

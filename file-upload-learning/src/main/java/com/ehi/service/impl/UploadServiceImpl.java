@@ -6,6 +6,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 
 /**
  * ClassName: UploadServiceImpl
@@ -34,7 +36,17 @@ public class UploadServiceImpl implements UploadService {
      * @param file
      */
     @Override
-    public void breakUpload(MultipartFile file, Long position, Long fileLenght) {
-
+    public void breakUpload(MultipartFile file, Long position, Long fileLenght) throws IOException {
+        String storePath = "D:\\";
+        String filename = file.getOriginalFilename();
+        RandomAccessFile accessFile = new RandomAccessFile(storePath + filename,"rw");
+        InputStream inputStream = file.getInputStream();
+        if (position >= 0) {
+            accessFile.seek(position);
+        }
+        int b= 0;
+        while (-1 != (b= inputStream.read())) {
+            accessFile.write(b);
+        }
     }
 }
