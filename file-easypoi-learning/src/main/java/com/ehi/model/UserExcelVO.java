@@ -14,32 +14,32 @@ public class UserExcelVO {
     /**
      * 工号
      */
-    @Excel(name = "工号")
+    @Excel(name = "工号", orderNum = "1")
     private String icCar;
     /**
      * 姓名
      */
-    @Excel(name = "姓名")
+    @Excel(name = "姓名", orderNum = "2")
     private String username;
     /**
      * 手机号码
      */
-    @Excel(name = "手机号码")
+    @Excel(name = "手机号码", orderNum = "3")
     private String phoneNumber;
     /**
      * 邮箱
      */
-    @Excel(name = "邮箱")
+    @Excel(name = "邮箱", orderNum = "4")
     private String email;
     /**
      * 角色
      */
-    @Excel(name = "角色")
+    @Excel(name = "角色", orderNum = "5")
     private String roleName;
     /**
      * 所属部门
      */
-    @Excel(name = "所属部门")
+    @Excel(name = "所属部门", orderNum = "6")
     private String departmentName;
 
     public String getIcCar() {

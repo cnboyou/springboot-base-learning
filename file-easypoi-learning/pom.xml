@@ -24,28 +24,28 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <!--excel操作-->
-        <dependency>
+<!--        <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-spring-boot-starter</artifactId>
             <version>3.3.0</version>
-        </dependency>
+        </dependency>-->
 
         <!--等同于上面-->
-<!--        <dependency>
+        <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
-            <version>3.0.3</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-web</artifactId>
-            <version>3.0.3</version>
+            <version>3.1.0</version>
         </dependency>
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-annotation</artifactId>
-            <version>3.0.3</version>
-        </dependency>-->
+            <version>3.1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

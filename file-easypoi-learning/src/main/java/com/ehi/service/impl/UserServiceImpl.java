@@ -2,9 +2,10 @@ package com.ehi.service.impl;
 
 import com.ehi.model.UserExcelVO;
 import com.ehi.service.UserService;
-import com.ehi.utils.ExcelUtils;
+import com.ehi.utils.EasyPoiUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.FileInputStream;
@@ -20,6 +21,7 @@ import java.util.List;
  * @Date: 2020/5/9 14:10
  * @Description: TODO
  */
+@Service
 public class UserServiceImpl implements UserService {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -41,7 +43,7 @@ public class UserServiceImpl implements UserService {
             userExcelVO.setRoleName("经理");
             excelVOList.add(userExcelVO);
         }
-        ExcelUtils.exportExcel(excelVOList,"员工信息表","员工信息", UserExcelVO.class,"员工信息", response);
+        //ExcelUtils.exportExcel(excelVOList,"员工信息表","员工信息", UserExcelVO.class,"员工信息", response);
     }
 
     /**
@@ -50,7 +52,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public void importExcel() throws IOException {
         InputStream inputStream = new FileInputStream("D:\\用户模板.xlsx");
-        List<UserExcelVO> userExcelVOList = ExcelUtils.importExcel(inputStream, 1, 1,false, UserExcelVO.class);
+
+        List<UserExcelVO> userExcelVOList = EasyPoiUtil.importExcel("D:\\用户模板.xlsx", 0, 1, UserExcelVO.class);
 
         for (UserExcelVO userExcelVO : userExcelVOList) {
             logger.info(userExcelVO.toString());
