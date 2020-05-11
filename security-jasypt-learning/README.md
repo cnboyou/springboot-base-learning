@@ -1,0 +1,2 @@
+# jasypt
+jasypt由于其使用的是PBEWithMD5AndDES加密方式，所以每次加密出来的结果都不一样，所以很适合对数据进行加密

@@ -1,0 +1,13 @@
+
+server:
+  port: 9003
+jasypt:
+  encryptor:
+    #密钥
+    password: abc
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&tinyInt1isBit=false
+    username: root
+    password: ENC(HR6xrpQ1tS4ghaLjiphoRw==)
+    driver-class-name: com.mysql.jdbc.Driver
