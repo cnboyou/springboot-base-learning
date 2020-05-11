@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RmiLearningApplication {
+public class NettyLearningApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RmiLearningApplication.class, args);
+        SpringApplication.run(NettyLearningApplication.class, args);
     }
 
 }
