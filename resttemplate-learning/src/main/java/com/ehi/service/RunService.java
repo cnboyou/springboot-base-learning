@@ -25,11 +25,17 @@ public class RunService {
     @Autowired
     private RestTemplate restTemplate;
 
+
+    private static String TEST = "http://localhost:9200/test";
     private static String GET_URL = "http://localhost:8080/testGet";
     private static String POST_URL = "http://localhost:8080/testPost";
     private static String POST_PARAM_URL = "http://localhost:8080/testPostParam";
     private static String PUT_URL = "http://localhost:8080/testPut";
     private static String DEL_URL = "http://localhost:8080/testDel";
+
+    public String test() {
+        return restTemplate.getForObject(TEST,String.class);
+    }
 
     /**
      * 调用Get接口

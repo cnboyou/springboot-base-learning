@@ -1,6 +1,8 @@
 package com.ehi.controller;
 
 import com.ehi.model.TestEntity;
+import com.ehi.service.RunService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,6 +14,14 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 public class TestController {
+
+    @Autowired
+    RunService runService;
+
+    @GetMapping("/test")
+    public String test() {
+        return runService.test();
+    }
 
     /**
      * get方法测试
