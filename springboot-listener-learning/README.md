@@ -1,0 +1,6 @@
+# 监听器
+监听器主要是对对象自身的创建和销毁进行监听 
+
+主要有ServletContextListener、HttpSessionListener、ServletRequestListener，用法基本一致
+
+下面以HttpSessionListener为例，用来监听 统计当前访问人数。
