@@ -1,0 +1,17 @@
+
+spring:
+  #数据库配置
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://localhost:3306/mp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+    url: jdbc:mysql://39.108.251.115:3306/mybatisdb?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+    name: mp
+    username: root
+    password: wyh19950212
+
+# 指定全局配置文件
+mybatis-plus:
+  #config-location: classpath:mybatis-config.xml
+  # 指定mapper.xml文件
+  mapper-locations: classpath*:mybatis/*.xml
