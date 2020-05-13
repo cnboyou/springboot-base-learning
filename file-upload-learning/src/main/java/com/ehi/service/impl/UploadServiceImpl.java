@@ -4,10 +4,7 @@ import com.ehi.service.UploadService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.RandomAccessFile;
+import java.io.*;
 
 /**
  * ClassName: UploadServiceImpl
@@ -31,12 +28,14 @@ public class UploadServiceImpl implements UploadService {
     }
 
     /**
-     * 断点上传
-     *
+     * 断点上传 实现方式1
      * @param file
+     * @param position
+     * @param fileLength
+     * @throws IOException
      */
     @Override
-    public void breakUpload(MultipartFile file, Long position, Long fileLenght) throws IOException {
+    public void breakUpload(MultipartFile file, Long position, Long fileLength) throws IOException {
         String storePath = "D:\\";
         String filename = file.getOriginalFilename();
         RandomAccessFile accessFile = new RandomAccessFile(storePath + filename,"rw");
@@ -48,5 +47,45 @@ public class UploadServiceImpl implements UploadService {
         while (-1 != (b= inputStream.read())) {
             accessFile.write(b);
         }
+
+        long currentLength = accessFile.length();
+        if (currentLength >= fileLength) {
+            //文件上传完毕
+
+        }
+
+    }
+
+    /**
+     * 断点上传 实现方式2
+     * @param file
+     * @param chunks
+     * @param chunkNum
+     */
+    @Override
+    public void breakUpload2(MultipartFile file, Integer chunks, Integer chunkNum) throws IOException {
+        if (chunkNum > chunks) {
+            return;
+        }
+        String storePath = "D:\\";
+        String filename = file.getOriginalFilename();
+        InputStream inputStream = file.getInputStream();
+        RandomAccessFile accessFile = new RandomAccessFile(storePath + filename, "rw");
+        //分块大小，与前端一致
+        int chunkSize = 10 * 1024 * 1024;
+        //获取断点位置
+        long position = chunks * (chunkSize - 1);
+        accessFile.seek(position);
+        int b = 0;
+        while ( -1 != (b = inputStream.read())) {
+            accessFile.write(b);
+        }
+
+        RandomAccessFile successFile = new RandomAccessFile(storePath + filename + ".conf", "rw");
+        //创建conf文件文件长度为总分片数，每上传一个分块即向conf文件中写入一个127，那么没上传的位置就是默认0,已上传的就是Byte.MAX_VALUE 127
+        successFile.setLength(chunks);
+        successFile.seek(chunkNum);
+        successFile.write(Byte.MAX_VALUE);
+
     }
 }

@@ -2,6 +2,7 @@ package com.ehi.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -23,4 +24,6 @@ public interface UploadService {
      * @param file
      */
     void breakUpload(MultipartFile file, Long position, Long fileLenght) throws IOException;
+
+    void breakUpload2(MultipartFile file, Integer chunks, Integer chunkNum) throws IOException;
 }
