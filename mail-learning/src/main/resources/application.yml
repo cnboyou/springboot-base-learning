@@ -1,0 +1,16 @@
+
+server:
+  port: 9001
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 1224900839@qq.com
+    password: gwlhhwbxpvdxfgaf
+    default-encoding: UTF-8
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+        debug: true
