@@ -1,0 +1,8 @@
+
+spring:
+  data:
+    mongodb:
+      #默认端口,没有设置密码
+      uri: mongodb://localhost:27017/springboot-db
+      #设置了密码
+      uri: mongodb://name:pass@localhost:27017/dbname
