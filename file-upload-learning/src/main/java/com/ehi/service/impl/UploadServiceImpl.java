@@ -90,17 +90,9 @@ public class UploadServiceImpl implements UploadService {
         successFile.write(Byte.MAX_VALUE);
         successFile.close();
 
-        BufferedReader reader = new BufferedReader(new FileReader(new File(storePath + filename +".conf")));
-        StringBuilder stringBuilder = new StringBuilder();
-        String tempStr;
-        while ((tempStr = reader.readLine()) != null) {
-            stringBuilder.append(tempStr);
-        }
-        reader.close();
-
     }
 
-    public static void test() throws IOException {
+    public static void testUpload2() throws IOException {
         RandomAccessFile successFile = new RandomAccessFile("D:\\test.conf", "rw");
         //创建conf文件文件长度为总分片数，每上传一个分块即向conf文件中写入一个127，那么没上传的位置就是默认0 ,已上传的就是Byte.MAX_VALUE 127
         successFile.setLength(12);
@@ -109,7 +101,7 @@ public class UploadServiceImpl implements UploadService {
         successFile.close();
     }
 
-    public static int read() throws IOException {
+    public static int getFailChunk() throws IOException {
         RandomAccessFile successFile = new RandomAccessFile("D:\\test.conf", "rw");
         byte[] bytes = new byte[(int) successFile.length()];
         successFile.read(bytes);
@@ -126,7 +118,7 @@ public class UploadServiceImpl implements UploadService {
 
 
     public static void main(String[] args) throws IOException {
-        test();
-        System.out.println(read());
+        testUpload2();
+        System.out.println(getFailChunk());
     }
 }
