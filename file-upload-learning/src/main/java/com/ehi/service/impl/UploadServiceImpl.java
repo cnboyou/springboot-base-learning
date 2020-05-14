@@ -81,11 +81,52 @@ public class UploadServiceImpl implements UploadService {
             accessFile.write(b);
         }
 
+        accessFile.close();
+
         RandomAccessFile successFile = new RandomAccessFile(storePath + filename + ".conf", "rw");
         //创建conf文件文件长度为总分片数，每上传一个分块即向conf文件中写入一个127，那么没上传的位置就是默认0,已上传的就是Byte.MAX_VALUE 127
         successFile.setLength(chunks);
         successFile.seek(chunkNum);
         successFile.write(Byte.MAX_VALUE);
+        successFile.close();
 
+        BufferedReader reader = new BufferedReader(new FileReader(new File(storePath + filename +".conf")));
+        StringBuilder stringBuilder = new StringBuilder();
+        String tempStr;
+        while ((tempStr = reader.readLine()) != null) {
+            stringBuilder.append(tempStr);
+        }
+        reader.close();
+
+    }
+
+    public static void test() throws IOException {
+        RandomAccessFile successFile = new RandomAccessFile("D:\\test.conf", "rw");
+        //创建conf文件文件长度为总分片数，每上传一个分块即向conf文件中写入一个127，那么没上传的位置就是默认0 ,已上传的就是Byte.MAX_VALUE 127
+        successFile.setLength(12);
+        successFile.seek(0);
+        successFile.write(Byte.MAX_VALUE);
+        successFile.close();
+    }
+
+    public static int read() throws IOException {
+        RandomAccessFile successFile = new RandomAccessFile("D:\\test.conf", "rw");
+        byte[] bytes = new byte[(int) successFile.length()];
+        successFile.read(bytes);
+        successFile.close();
+        //获取上传未完成的坐标
+        for (int i = 0; i < bytes.length; i++) {
+            int i1 = bytes[i] & Byte.MAX_VALUE;
+            if (i1 == 0) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+
+    public static void main(String[] args) throws IOException {
+        test();
+        System.out.println(read());
     }
 }
